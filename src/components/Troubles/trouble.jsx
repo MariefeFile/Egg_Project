@@ -17,6 +17,12 @@ const Trouble = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
 
+  const [issues] = useState([
+    { id: 1, name: "Conveyor Motor", status: "error" }, // Example: Error
+    { id: 2, name: "Sensor", status: "working" }, // Example: Working
+    { id: 3, name: "Load Cell", status: "error" }, // Example: Error
+  ]);
+
   return (
     <div className="trouble-container">
       {/* Top Bar */}
@@ -68,6 +74,25 @@ const Trouble = () => {
               <FaLifeRing className="sidebar-icon3" />
               {sidebarOpen && <span>Support</span>}
             </div>
+          </div>
+        </div>
+
+        <div className="trouble-container">
+          <h2>Trouble Shooting</h2>
+          <div className="issues-section">
+            {issues.map((issue) => (
+              <div className="issue-box" key={issue.id}>
+                <h3>{issue.name}</h3>
+                <p>Details for problem</p>
+                <button
+                  className={`status-button ${
+                    issue.status === "error" ? "error" : "working"
+                  }`}
+                >
+                  {issue.status === "error" ? "Error" : "Working"}
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -70,6 +70,49 @@ const History = () => {
             </div>
           </div>
         </div>
+
+        {/* Chart */}
+        <div className="table-container">
+          <h2>Egg Sorting Data</h2>
+          <table className="egg-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Small Egg</th>
+                <th>Medium Egg</th>
+                <th>Large Egg</th>
+                <th>Bad Egg</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Daily</td>
+                <td>12</td>
+                <td>8</td>
+                <td>5</td>
+                <td>20</td>
+                <td>45</td>
+              </tr>
+              <tr>
+                <td>Weekly</td>
+                <td>84</td>
+                <td>56</td>
+                <td>35</td>
+                <td>140</td>
+                <td>315</td>
+              </tr>
+              <tr>
+                <td>Monthly</td>
+                <td>360</td>
+                <td>240</td>
+                <td>150</td>
+                <td>600</td>
+                <td>1350</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

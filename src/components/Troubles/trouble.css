@@ -176,3 +176,71 @@
   height: 350px;
   font-family: Arial, sans-serif;
 }
+
+.trouble-container {
+  background-color: rgb(143, 222, 240);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(84, 58, 58, 0.1);
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90vh;
+}
+
+.issues-section {
+  display: flex;
+  flex-direction: row; /* Change from column to row */
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; /* Center the boxes horizontally */
+  flex-wrap: wrap; /* Allows wrapping if the screen is too small */
+}
+
+.issue-box {
+  border: 2px solid #555;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f2f2f2;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Adjust width to fit nicely in a row */
+  text-align: center;
+}
+
+.issue-box h3 {
+  margin: 0 0 5px 0;
+}
+
+.issue-box p {
+  margin: 0 0 10px 0;
+}
+
+.status-button {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Red button for "Error" */
+.status-button.error {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.status-button.error:hover {
+  background-color: #cc0000;
+}
+
+/* Green button for "Working" */
+.status-button.working {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-button.working:hover {
+  background-color: #388e3c;
+}
