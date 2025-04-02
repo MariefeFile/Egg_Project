@@ -1,0 +1,19 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+body{
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 50%), 
+              url('/public/background.png');
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  filter: brightness(2.0) contrast(1.00) saturate(0.95); /* Brighter, slightly more contrast, slightly less saturation */
+  position: relative; 
+}
+
+

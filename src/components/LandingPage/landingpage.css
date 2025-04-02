@@ -1,0 +1,94 @@
+.admin {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Georgia", sans-serif;
+  /* Thicker underline */
+  padding-bottom: 5px;
+  color: rgb(138, 62, 11);
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Glow effect */
+  text-align: center;
+  animation: floatText 3s ease-in-out infinite;
+}
+
+.icon-image {
+  width: 800px; /* Adjust size to make it big */
+  height: auto; /* Maintain aspect ratio */
+  animation: float 3s ease-in-out infinite; /* Floating animation */
+  filter: contrast(100%) brightness(50%) saturate(100%);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  70% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes floatText {
+  0% {
+    transform: translate(0px, 0px);
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate(-10px, -10px);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(10px, 0px);
+    opacity: 0.9;
+  }
+}
+.welcome-text {
+  font-size: 90px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif; /* Change font if needed */
+  color: rgb(180, 159, 6); /* Adjust color */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Glow effect */
+  text-align: center;
+  position: relative;
+  top: -30px;
+  animation: typingtext 2.5s steps(40, eand), blinktext 0, 75s step-end infinite;
+}
+@keyframes typingtext {
+  from {
+    width: 0;
+  }
+  to {
+    width: 300px;
+  }
+}
+@keyframes blinktext {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgb(180, 159, 6);
+  }
+}
+
+.rectangle {
+  width: 30%;
+  height: 50px;
+  background-color: rgba(128, 0, 0, 0.9); /* Blue color */
+  margin-top: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 2px 2px 10px rgba(10, 99, 171, 0.5); /* Glow effect */
+  position: relative;
+  left: 35%;
+  top: -50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(19, 10, 10); /* Make text visible */
+  font-size: 25px; /* Adjust font size */
+  font-weight: bold;
+  cursor: pointer;
+}
