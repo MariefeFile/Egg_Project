@@ -10,12 +10,92 @@ import {
 import { MdWork } from "react-icons/md";
 import "./history.css";
 
+const getWeeklyDates = () => {
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // 0 (Sunday) - 6 (Saturday)
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - dayOfWeek + 1); // Set to Monday
+
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
+  return days.map((day, index) => {
+    let date = new Date(startOfWeek);
+    date.setDate(startOfWeek.getDate() + index);
+
+    const formattedDate = `${date.toLocaleString("default", {
+      month: "long",
+    })}/${String(date.getDate()).padStart(2, "0")}/${date.getFullYear()}`;
+
+    return {
+      day,
+      date: formattedDate,
+      small: 12,
+      medium: 8,
+      large: 5,
+      bad: 20,
+    };
+  });
+};
+
+const getMonthlyData = () => {
+  const months = ["February", "March", "April"];
+  return months.map((month) => ({
+    month,
+    small: Math.floor(Math.random() * 500) + 300, // Simulated data
+    medium: Math.floor(Math.random() * 300) + 200,
+    large: Math.floor(Math.random() * 200) + 100,
+    bad: Math.floor(Math.random() * 700) + 500,
+  }));
+};
+
 const History = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [monthlyData] = useState(getMonthlyData());
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
+  const [weeklyBreakdown, setWeeklyBreakdown] = useState(getWeeklyDates());
+
+  const tableData = [
+    { type: "Daily", small: 12, medium: 8, large: 5, bad: 20, total: 45 },
+    { type: "Weekly", small: 84, medium: 56, large: 35, bad: 140, total: 315 },
+    {
+      type: "Monthly",
+      small: 360,
+      medium: 240,
+      large: 150,
+      bad: 600,
+      total: 1350,
+    },
+  ];
+
+  const handleRowClick = (row) => {
+    if (row.type === "Weekly") {
+      setSelectedRow({ type: "Weekly", data: weeklyBreakdown });
+    } else if (row.type === "Monthly") {
+      setSelectedRow({ type: "Monthly", data: monthlyData });
+    } else {
+      setSelectedRow({
+        type: "Daily",
+        date: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "2-digit",
+          year: "numeric",
+        }),
+        ...row,
+      });
+    }
+  };
 
   return (
     <div className="history-container">
@@ -78,41 +158,120 @@ const History = () => {
             <thead>
               <tr>
                 <th>Type</th>
-                <th>Small Egg</th>
-                <th>Medium Egg</th>
-                <th>Large Egg</th>
-                <th>Bad Egg</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>Bad</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Daily</td>
-                <td>12</td>
-                <td>8</td>
-                <td>5</td>
-                <td>20</td>
-                <td>45</td>
-              </tr>
-              <tr>
-                <td>Weekly</td>
-                <td>84</td>
-                <td>56</td>
-                <td>35</td>
-                <td>140</td>
-                <td>315</td>
-              </tr>
-              <tr>
-                <td>Monthly</td>
-                <td>360</td>
-                <td>240</td>
-                <td>150</td>
-                <td>600</td>
-                <td>1350</td>
-              </tr>
+              {tableData.map((row, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleRowClick(row)}
+                  className={
+                    selectedRow?.type === row.type ? "highlighted" : ""
+                  }
+                >
+                  <td>{row.type}</td>
+                  <td>{row.small}</td>
+                  <td>{row.medium}</td>
+                  <td>{row.large}</td>
+                  <td>{row.bad}</td>
+                  <td>{row.total}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+
+        {/* Details Table */}
+        {selectedRow?.type === "Weekly" && (
+          <div className="details-table-container">
+            <h3>Weekly Breakdown</h3>
+            <table className="details-table">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Date</th>
+                  <th>Small</th>
+                  <th>Medium</th>
+                  <th>Large</th>
+                  <th>Bad</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedRow.data.map((dayData, index) => (
+                  <tr key={index}>
+                    <td>{dayData.day}</td>
+                    <td>{dayData.date}</td>
+                    <td>{dayData.small}</td>
+                    <td>{dayData.medium}</td>
+                    <td>{dayData.large}</td>
+                    <td>{dayData.bad}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {selectedRow?.type === "Daily" && (
+          <div className="details-table-container">
+            <h3>Daily Breakdown</h3>
+            <table className="details-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Small</th>
+                  <th>Medium</th>
+                  <th>Large</th>
+                  <th>Bad</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{selectedRow.date}</td>
+                  <td>{selectedRow.small}</td>
+                  <td>{selectedRow.medium}</td>
+                  <td>{selectedRow.large}</td>
+                  <td>{selectedRow.bad}</td>
+                  <td>{selectedRow.total}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {selectedRow?.type === "Monthly" && (
+          <div className="details-table-container">
+            <h3>Monthly Breakdown</h3>
+            <table className="details-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Small</th>
+                  <th>Medium</th>
+                  <th>Large</th>
+                  <th>Bad</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedRow.data.map((monthData, index) => (
+                  <tr key={index}>
+                    <td>{monthData.month}</td>
+                    <td>{monthData.small}</td>
+                    <td>{monthData.medium}</td>
+                    <td>{monthData.large}</td>
+                    <td>{monthData.bad}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
