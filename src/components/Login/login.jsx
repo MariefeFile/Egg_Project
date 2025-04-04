@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import firebase from "../../firebase";
 
 const Login = () => {
   const [password, setPassword] = useState("");

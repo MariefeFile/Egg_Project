@@ -134,47 +134,47 @@ const Once = () => {
         <div className={`sidebarsss ${sidebarOpen ? "opensss" : "closedsss"}`}>
           <div className="sidebar-menusss">
             <div
-              className="sidebar-item"
+              className="sidebar-itemsss"
               onClick={() => navigate("/once")} // Navigate to dash.jsx
               style={{ cursor: "pointer" }} // Make it clickable
             >
-              <FaChartLine className="sidebar-icon" />
+              <FaChartLine className="sidebar-iconsss" />
               {sidebarOpen && <span>Dashboard</span>}
             </div>
 
             <div
-              className="sidebar-item"
+              className="sidebar-itemsss"
               onClick={() => navigate("/history")} // Navigate to dash.jsx
               style={{ cursor: "pointer" }} // Make it clickable
             >
-              <MdWork className="sidebar-icon" />
+              <MdWork className="sidebar-iconsss" />
               {sidebarOpen && <span>History</span>}
             </div>
 
             <div
-              className="sidebar-item"
+              className="sidebar-itemsss"
               onClick={() => navigate("/trouble")} // Navigate to dash.jsx
               style={{ cursor: "pointer" }} // Make it clickable
             >
-              <FaNewspaper className="sidebar-icon" />
+              <FaNewspaper className="sidebar-iconsss" />
               {sidebarOpen && <span>Trouble</span>}
             </div>
 
             <div
-              className="sidebar-item"
+              className="sidebar-itemsss"
               onClick={() => navigate("/setting")} // Navigate to dash.jsx
               style={{ cursor: "pointer" }} // Make it clickable
             >
-              <FaUserCog className="sidebar-icon" />
+              <FaUserCog className="sidebar-iconsss" />
               {sidebarOpen && <span>Settings</span>}
             </div>
 
             <div
-              className="sidebar-item"
+              className="sidebar-itemsss"
               onClick={() => navigate("/support")} // Navigate to dash.jsx
               style={{ cursor: "pointer" }} // Make it clickable
             >
-              <FaLifeRing className="sidebar-icon" />
+              <FaLifeRing className="sidebar-iconsss" />
               {sidebarOpen && <span>Support</span>}
             </div>
           </div>

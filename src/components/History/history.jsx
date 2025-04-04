@@ -185,94 +185,93 @@ const History = () => {
             </tbody>
           </table>
         </div>
-
-        {/* Details Table */}
-        {selectedRow?.type === "Weekly" && (
-          <div className="details-table-container">
-            <h3>Weekly Breakdown</h3>
-            <table className="details-table">
-              <thead>
-                <tr>
-                  <th>Day</th>
-                  <th>Date</th>
-                  <th>Small</th>
-                  <th>Medium</th>
-                  <th>Large</th>
-                  <th>Bad</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedRow.data.map((dayData, index) => (
-                  <tr key={index}>
-                    <td>{dayData.day}</td>
-                    <td>{dayData.date}</td>
-                    <td>{dayData.small}</td>
-                    <td>{dayData.medium}</td>
-                    <td>{dayData.large}</td>
-                    <td>{dayData.bad}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {selectedRow?.type === "Daily" && (
-          <div className="details-table-container">
-            <h3>Daily Breakdown</h3>
-            <table className="details-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Small</th>
-                  <th>Medium</th>
-                  <th>Large</th>
-                  <th>Bad</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{selectedRow.date}</td>
-                  <td>{selectedRow.small}</td>
-                  <td>{selectedRow.medium}</td>
-                  <td>{selectedRow.large}</td>
-                  <td>{selectedRow.bad}</td>
-                  <td>{selectedRow.total}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {selectedRow?.type === "Monthly" && (
-          <div className="details-table-container">
-            <h3>Monthly Breakdown</h3>
-            <table className="details-table">
-              <thead>
-                <tr>
-                  <th>Month</th>
-                  <th>Small</th>
-                  <th>Medium</th>
-                  <th>Large</th>
-                  <th>Bad</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedRow.data.map((monthData, index) => (
-                  <tr key={index}>
-                    <td>{monthData.month}</td>
-                    <td>{monthData.small}</td>
-                    <td>{monthData.medium}</td>
-                    <td>{monthData.large}</td>
-                    <td>{monthData.bad}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
       </div>
+      {/* Details Tables */}
+      {selectedRow?.type === "Weekly" && (
+        <div className="details-table-container">
+          <h3>Weekly Breakdown</h3>
+          <table className="details-table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>Bad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedRow.data.map((dayData, index) => (
+                <tr key={index}>
+                  <td>{dayData.day}</td>
+                  <td>{dayData.date}</td>
+                  <td>{dayData.small}</td>
+                  <td>{dayData.medium}</td>
+                  <td>{dayData.large}</td>
+                  <td>{dayData.bad}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {selectedRow?.type === "Daily" && (
+        <div className="details-table-container">
+          <h3>Daily Breakdown</h3>
+          <table className="details-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>Bad</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{selectedRow.date}</td>
+                <td>{selectedRow.small}</td>
+                <td>{selectedRow.medium}</td>
+                <td>{selectedRow.large}</td>
+                <td>{selectedRow.bad}</td>
+                <td>{selectedRow.total}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {selectedRow?.type === "Monthly" && (
+        <div className="details-table-container">
+          <h3>Monthly Breakdown</h3>
+          <table className="details-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>Bad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedRow.data.map((monthData, index) => (
+                <tr key={index}>
+                  <td>{monthData.month}</td>
+                  <td>{monthData.small}</td>
+                  <td>{monthData.medium}</td>
+                  <td>{monthData.large}</td>
+                  <td>{monthData.bad}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

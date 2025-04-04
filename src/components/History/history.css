@@ -179,27 +179,29 @@
 
 /*egg container*/
 .table-container {
-  margin: 20px;
-  padding: 20px;
-  height: 28vh;
-  width: 80vh;
+  margin: 30px auto -20px;
+  padding: 50px;
+  height: 36vh;
+  min-width: 185svh;
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  margin-left: -90px;
+  margin-top: 15px;
 }
 
 /* Table Styling */
 .egg-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .egg-table th,
 .egg-table td {
   border: 1px solid #090303;
-  padding: 12px;
+  padding: 15px;
   text-align: center;
 }
 
@@ -222,9 +224,11 @@
 /* Details Table */
 .details-table-container {
   margin-top: 20px;
-  background-color: rgb(240, 161, 77);
-  height: 42vh;
-  width: 70vh;
+  background-color: rgb(244, 241, 237);
+  min-height: 54vh;
+  min-width: 185vh;
+  margin-left: -90px;
+  padding: 40px;
 }
 
 .details-table {
@@ -275,7 +279,17 @@
 
 /* Weekly Breakdown Table */
 .details-table-container {
-  margin-top: 20px;
+  margin-top: 50px; /* Adjust the top margin to add space above */
+  margin-bottom: 80px; /* Add space below the table container */
+  padding: px; /* Optional padding around the table */
+  display: block; /* Ensure it's block-level for proper positioning */
+  text-align: center; /* Align content in the center (optional) */
+}
+
+.below-table-container {
+  margin-top: 30px; /* Add space between the table and the content below */
+  padding: 10px;
+  text-align: left; /* Align text to the left (optional) */
 }
 
 .details-table {
@@ -286,7 +300,7 @@
 
 .details-table th,
 .details-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #0e0a0a;
   padding: 8px;
   text-align: center;
 }
@@ -301,7 +315,7 @@
 }
 
 .highlighted {
-  background-color: #ffedcc;
+  background-color: #e8e7e5;
 }
 .details-table-container {
   margin-top: 20px;
@@ -312,7 +326,7 @@
 }
 .details-table th,
 .details-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #0e0a0a;
   padding: 8px;
 }
 
@@ -328,7 +342,7 @@
 
 .monthly-table th,
 .monthly-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #0e0a0a;
   padding: 10px;
   text-align: center;
 }
