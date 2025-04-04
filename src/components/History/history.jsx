@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaBars,
   FaInfoCircle,
@@ -61,6 +62,7 @@ const History = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [monthlyData] = useState(getMonthlyData());
+  const navigate = useNavigate();
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
@@ -128,23 +130,23 @@ const History = () => {
         {/* Sidebar */}
         <div className={`sidebar2 ${sidebarOpen ? "open2" : "closed2"}`}>
           <div className="sidebar-menu2">
-            <div className="sidebar-item2">
+            <div className="sidebar-item2" onClick={() => navigate("/once")}>
               <FaChartLine className="sidebar-icon2" />
               {sidebarOpen && <span>Dashboard</span>}
             </div>
-            <div className="sidebar-item2">
+            <div className="sidebar-item2" onClick={() => navigate("/history")}>
               <MdWork className="sidebar-icon2" />
               {sidebarOpen && <span>History</span>}
             </div>
-            <div className="sidebar-item2">
+            <div className="sidebar-item2" onClick={() => navigate("/trouble")}>
               <FaNewspaper className="sidebar-icon2" />
               {sidebarOpen && <span>Troubles</span>}
             </div>
-            <div className="sidebar-item2">
+            <div className="sidebar-item2" onClick={() => navigate("/setting")}>
               <FaUserCog className="sidebar-icon2" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-            <div className="sidebar-item2">
+            <div className="sidebar-item2" onClick={() => navigate("/support")}>
               <FaLifeRing className="sidebar-icon2" />
               {sidebarOpen && <span>Support</span>}
             </div>

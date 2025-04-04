@@ -171,19 +171,19 @@ const Once = () => {
         <div className="Dsh-container">
           <div className="stats-grid">
             <div className="card red">
-              <h2>20</h2>
+              <h2>{totalEggs["Bad Eggs"]}</h2>
               <p>Bad Eggs</p>
             </div>
             <div className="card orange">
-              <h2>12</h2>
+              <h2>{totalEggs["Small Eggs"]}</h2>
               <p>Small Eggs</p>
             </div>
             <div className="card yellow">
-              <h2>8</h2>
+              <h2>{totalEggs["Medium Eggs"]}</h2>
               <p>Medium Eggs</p>
             </div>
             <div className="card dark-red">
-              <h2>5</h2>
+              <h2>{totalEggs["Large Eggs"]}</h2>
               <p>Large Eggs</p>
             </div>
           </div>
