@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -98,7 +99,7 @@ const COLORS = ["#800000", "#ffcc00", "#d2691e", "#008000"];
 const Once = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
-
+  const navigate = useNavigate();
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
 
@@ -128,51 +129,37 @@ const Once = () => {
         </div>
       </div>
 
-      {/* Content Wrapper */}
       <div className="content-wrapsss">
-        {/* Sidebar */}
         <div className={`sidebarsss ${sidebarOpen ? "opensss" : "closedsss"}`}>
           <div className="sidebar-menusss">
-            <div
-              className="sidebar-itemsss"
-              onClick={() => navigate("/once")} // Navigate to dash.jsx
-              style={{ cursor: "pointer" }} // Make it clickable
-            >
+            <div className="sidebar-itemsss" onClick={() => navigate("/once")}>
               <FaChartLine className="sidebar-iconsss" />
               {sidebarOpen && <span>Dashboard</span>}
             </div>
-
             <div
               className="sidebar-itemsss"
-              onClick={() => navigate("/history")} // Navigate to dash.jsx
-              style={{ cursor: "pointer" }} // Make it clickable
+              onClick={() => navigate("/history")}
             >
               <MdWork className="sidebar-iconsss" />
               {sidebarOpen && <span>History</span>}
             </div>
-
             <div
               className="sidebar-itemsss"
-              onClick={() => navigate("/trouble")} // Navigate to dash.jsx
-              style={{ cursor: "pointer" }} // Make it clickable
+              onClick={() => navigate("/trouble")}
             >
               <FaNewspaper className="sidebar-iconsss" />
               {sidebarOpen && <span>Trouble</span>}
             </div>
-
             <div
               className="sidebar-itemsss"
-              onClick={() => navigate("/setting")} // Navigate to dash.jsx
-              style={{ cursor: "pointer" }} // Make it clickable
+              onClick={() => navigate("/setting")}
             >
               <FaUserCog className="sidebar-iconsss" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-
             <div
               className="sidebar-itemsss"
-              onClick={() => navigate("/support")} // Navigate to dash.jsx
-              style={{ cursor: "pointer" }} // Make it clickable
+              onClick={() => navigate("/support")}
             >
               <FaLifeRing className="sidebar-iconsss" />
               {sidebarOpen && <span>Support</span>}

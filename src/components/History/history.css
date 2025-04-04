@@ -183,10 +183,10 @@
   padding: 50px;
   height: 36vh;
   min-width: 185svh;
-  background-color: #ffffff;
-  border-radius: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  background-color: transparent;
+
+  color: #07090b;
+  text-align: left;
   margin-left: -90px;
   margin-top: 15px;
 }
@@ -196,6 +196,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  background-color: #75ecf4;
 }
 
 .egg-table th,
@@ -203,10 +204,11 @@
   border: 1px solid #090303;
   padding: 15px;
   text-align: center;
+  font-weight: bold;
 }
 
 .egg-table th {
-  background-color: #174636;
+  background-color: #050c0a;
   color: white;
   font-weight: bold;
 }
@@ -223,11 +225,12 @@
 
 /* Details Table */
 .details-table-container {
-  margin-top: 20px;
-  background-color: rgb(244, 241, 237);
+  margin: 30px auto 90px;
+  margin-top: 80px;
+  background-color: transparent;
   min-height: 54vh;
-  min-width: 185vh;
-  margin-left: -90px;
+  min-width: 189vh;
+  margin-left: -110px;
   padding: 40px;
 }
 
@@ -241,17 +244,20 @@
   border: 1px solid #090606;
   padding: 12px;
   text-align: center;
+  font-weight: bold;
 }
 
 .details-table th {
   background-color: #040609;
   color: rgb(8, 2, 2);
+  font-weight: bold;
 }
 
 /* Table Styling */
 .table-container {
   flex: 1;
   padding: 20px;
+  font-weight: bold;
 }
 
 .egg-table {
@@ -265,6 +271,7 @@
   border: 1px solid #130909;
   padding: 8px;
   text-align: center;
+  font-weight: bold;
 }
 
 .egg-table th {
@@ -280,33 +287,40 @@
 /* Weekly Breakdown Table */
 .details-table-container {
   margin-top: 50px; /* Adjust the top margin to add space above */
-  margin-bottom: 80px; /* Add space below the table container */
-  padding: px; /* Optional padding around the table */
+  margin-bottom: 10px; /* Add space below the table container */
+  padding: 5px; /* Optional padding around the table */
   display: block; /* Ensure it's block-level for proper positioning */
-  text-align: center; /* Align content in the center (optional) */
+  text-align: left; /* Align content in the center (optional) */
+  font-weight: bold;
+  color: black;
+  margin: 30px auto 90px;
+  margin-left: -70px;
+  min-width: 182vh;
 }
 
 .below-table-container {
-  margin-top: 30px; /* Add space between the table and the content below */
-  padding: 10px;
+  margin-top: 50px; /* Add space between the table and the content below */
+  padding: 5px;
   text-align: left; /* Align text to the left (optional) */
 }
 
 .details-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #e35b5b;
+  background-color: #75ecf4;
+  font-weight: bold;
 }
 
 .details-table th,
 .details-table td {
   border: 1px solid #0e0a0a;
-  padding: 8px;
-  text-align: center;
+  padding: 5px;
+  text-align: left;
+  font-weight: bold;
 }
 
 .details-table th {
-  background-color: #3498db;
+  background-color: #2c3e50;
   color: white;
 }
 
@@ -344,23 +358,23 @@
 .monthly-table td {
   border: 1px solid #0e0a0a;
   padding: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .monthly-table th {
-  background-color: #8e44ad; /* Purple for distinction */
+  background-color: #140b18; /* Purple for distinction */
   color: white;
 }
 
 .monthly-table tr:hover {
-  background-color: #f4e1ff;
+  background-color: #0b0c0d;
 }
 
 .monthly-table .highlighted {
-  background-color: #d7bde2 !important;
+  background-color: #446aa6 !important;
 }
 
 .highlighted {
-  background-color: #300637; /* Light gray background to highlight */
-  color: #130808; /* Ensure the text stays visible */
+  background-color: #0f0610; /* Light gray background to highlight */
+  color: #100808; /* Ensure the text stays visible */
 }
