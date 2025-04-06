@@ -29,6 +29,7 @@ const Setting = () => {
 
   const [colorMode, setColorMode] = useState("system");
   const [theme, setTheme] = useState("Royal Heath");
+  const [brightness, setBrightness] = useState(100);
 
   return (
     <div className="setting-container">
@@ -118,6 +119,18 @@ const Setting = () => {
                 </button>
               ))}
             </div>
+          </div>
+
+          <div className="brightness-section">
+            <h3>Brightness</h3>
+            <input
+              type="range"
+              min="50"
+              max="150"
+              value={brightness}
+              onChange={(e) => setBrightness(e.target.value)}
+            />
+            <span>{brightness}%</span>
           </div>
         </div>
       </div>

@@ -236,3 +236,12 @@ body.dark-mode {
   background-color: #121212;
   color: #ffffff;
 }
+
+.brightness-section {
+  margin-top: 20px;
+}
+
+.brightness-section input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+}
