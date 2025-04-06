@@ -9,7 +9,6 @@ import One from "./components/One/once.jsx";
 import History from "./components/History/history.jsx";
 import Trouble from "./components/Troubles/trouble.jsx";
 import Settings from "./components/Settings/setting.jsx";
-import Support from "./components/Support/support.jsx";
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/trouble" element={<Trouble />} />
         <Route path="/setting" element={<Settings />} />
-        <Route path="/support" element={<Support />} />
       </Routes>
     </Router>
   );

@@ -66,10 +66,6 @@ const Setting = () => {
               <FaUserCog className="sidebar-icon4" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-            <div className="sidebar-item4">
-              <FaLifeRing className="sidebar-icon4" />
-              {sidebarOpen && <span>Support</span>}
-            </div>
           </div>
         </div>
       </div>

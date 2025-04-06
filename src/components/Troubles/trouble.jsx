@@ -72,10 +72,6 @@ const Trouble = () => {
               <FaUserCog className="sidebar-icon3" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-            <div className="sidebar-item3" onClick={() => navigate("/support")}>
-              <FaLifeRing className="sidebar-icon3" />
-              {sidebarOpen && <span>Support</span>}
-            </div>
           </div>
         </div>
 

@@ -111,15 +111,6 @@ const Setting = () => {
               <FaUserCog className="sidebar-icon" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-
-            <div
-              className="sidebar-item"
-              onClick={() => navigate("/support")} // Navigate to dash.jsx
-              style={{ cursor: "pointer" }} // Make it clickable
-            >
-              <FaLifeRing className="sidebar-icon" />
-              {sidebarOpen && <span>Support</span>}
-            </div>
           </div>
         </div>
 

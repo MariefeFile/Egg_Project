@@ -146,10 +146,6 @@ const History = () => {
               <FaUserCog className="sidebar-icon2" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-            <div className="sidebar-item2" onClick={() => navigate("/support")}>
-              <FaLifeRing className="sidebar-icon2" />
-              {sidebarOpen && <span>Support</span>}
-            </div>
           </div>
         </div>
 

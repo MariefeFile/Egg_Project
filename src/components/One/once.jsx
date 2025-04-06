@@ -157,13 +157,6 @@ const Once = () => {
               <FaUserCog className="sidebar-iconsss" />
               {sidebarOpen && <span>Settings</span>}
             </div>
-            <div
-              className="sidebar-itemsss"
-              onClick={() => navigate("/support")}
-            >
-              <FaLifeRing className="sidebar-iconsss" />
-              {sidebarOpen && <span>Support</span>}
-            </div>
           </div>
         </div>
 
