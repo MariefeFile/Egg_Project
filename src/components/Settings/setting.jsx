@@ -11,6 +11,14 @@ import {
 import { MdWork } from "react-icons/md";
 import "./setting.css";
 
+const themes = [
+  "Royal Heath",
+  "Egg Sour",
+  "Snowy Mint",
+  "Hopbush",
+  "Flax",
+  "Fuchsia",
+];
 const Setting = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
@@ -18,6 +26,9 @@ const Setting = () => {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
+
+  const [colorMode, setColorMode] = useState("system");
+  const [theme, setTheme] = useState("Royal Heath");
 
   return (
     <div className="setting-container">
@@ -65,6 +76,47 @@ const Setting = () => {
             <div className="sidebar-item4" onClick={() => navigate("/setting")}>
               <FaUserCog className="sidebar-icon4" />
               {sidebarOpen && <span>Settings</span>}
+            </div>
+          </div>
+        </div>
+
+        <div className="appearance-settings">
+          <h2>Appearance</h2>
+
+          <div className="color-mode">
+            <h3>Color Mode</h3>
+            <div className="mode-options">
+              {["dark", "light"].map((mode) => (
+                <div
+                  key={mode}
+                  className={`mode-card ${
+                    colorMode === mode ? "selected" : ""
+                  }`}
+                  onClick={() => setColorMode(mode)}
+                >
+                  <div className="mode-visual">
+                    {mode === "dark" ? "🌙" : "🌞"}
+                  </div>
+                  <span>{mode.charAt(0).toUpperCase() + mode.slice(1)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="themes-section">
+            <h3>Themes</h3>
+            <div className="themes-grid">
+              {themes.map((t) => (
+                <button
+                  key={t}
+                  className={`theme-button ${
+                    theme === t ? "active-theme" : ""
+                  }`}
+                  onClick={() => setTheme(t)}
+                >
+                  {t}
+                </button>
+              ))}
             </div>
           </div>
         </div>
