@@ -1,5 +1,10 @@
-import { initializeApp } from "firebase/app";
+// src/config/firebase-config.js
+
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBJ9k65r9X5l9DRSB1UayWNEcEPem_D-Yo",
   authDomain: "egg-project-57572.firebaseapp.com",
@@ -11,5 +16,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app);
-export default app;
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ✅ Export them so other files can import
+export { auth, db };

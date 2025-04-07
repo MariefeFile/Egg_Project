@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BarChart,
@@ -15,93 +15,84 @@ import {
   FaChartLine,
   FaNewspaper,
   FaUserCog,
-  FaLifeRing,
 } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import "./once.css";
 
-const data = [
-  {
-    date: "12/01",
-    "Bad Eggs": 40,
-    "Small Eggs": 30,
-    "Medium Eggs": 20,
-    "Large Eggs": 10,
-  },
-  {
-    date: "12/02",
-    "Bad Eggs": 35,
-    "Small Eggs": 20,
-    "Medium Eggs": 15,
-    "Large Eggs": 8,
-  },
-  {
-    date: "12/03",
-    "Bad Eggs": 38,
-    "Small Eggs": 40,
-    "Medium Eggs": 10,
-    "Large Eggs": 12,
-  },
-  {
-    date: "12/04",
-    "Bad Eggs": 20,
-    "Small Eggs": 25,
-    "Medium Eggs": 18,
-    "Large Eggs": 9,
-  },
-  {
-    date: "12/05",
-    "Bad Eggs": 37,
-    "Small Eggs": 30,
-    "Medium Eggs": 15,
-    "Large Eggs": 10,
-  },
-  {
-    date: "12/06",
-    "Bad Eggs": 32,
-    "Small Eggs": 28,
-    "Medium Eggs": 22,
-    "Large Eggs": 14,
-  },
-  {
-    date: "12/07",
-    "Bad Eggs": 45,
-    "Small Eggs": 20,
-    "Medium Eggs": 18,
-    "Large Eggs": 11,
-  },
-  {
-    date: "12/08",
-    "Bad Eggs": 28,
-    "Small Eggs": 35,
-    "Medium Eggs": 20,
-    "Large Eggs": 15,
-  },
-];
-
-const totalEggs = data.reduce(
-  (acc, curr) => {
-    acc["Bad Eggs"] += curr["Bad Eggs"];
-    acc["Small Eggs"] += curr["Small Eggs"];
-    acc["Medium Eggs"] += curr["Medium Eggs"];
-    acc["Large Eggs"] += curr["Large Eggs"];
-    return acc;
-  },
-  { "Bad Eggs": 0, "Small Eggs": 0, "Medium Eggs": 0, "Large Eggs": 0 }
-);
-
-const pieData = Object.keys(totalEggs).map((key) => ({
-  name: key,
-  value: totalEggs[key],
-}));
-const COLORS = ["#800000", "#ffcc00", "#d2691e", "#008000"];
+import { db } from "../config/firebase-config"; // ✅ make sure this path is correct
+import { doc, getDoc } from "firebase/firestore";
 
 const Once = () => {
+  const [eggData, setEggData] = useState({
+    bad: 0,
+    small: 0,
+    medium: 0,
+    large: 0,
+  });
+
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const navigate = useNavigate();
+
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
+
+  // ✅ Fetch egg count data from Firestore
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+
+      // Run at exactly 00:00 (midnight)
+      if (hours === 0 && minutes === 0) {
+        try {
+          const docRef = doc(db, "users", "analytics");
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+
+            // Save data to 'history' collection with timestamp
+            const date = now.toLocaleDateString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            });
+
+            await setDoc(doc(db, "history", date), {
+              ...data,
+              timestamp: new Date().toISOString(),
+            });
+
+            // Reset egg count to 0
+            await setDoc(docRef, {
+              bad: 0,
+              small: 0,
+              medium: 0,
+              large: 0,
+            });
+
+            console.log("Egg data saved to history and reset at midnight.");
+          }
+        } catch (error) {
+          console.error("Midnight reset failed:", error);
+        }
+      }
+    }, 60000); // Check every 60 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+
+  const data = [
+    {
+      name: "Today",
+      "Bad Eggs": eggData.bad,
+      "Small Eggs": eggData.small,
+      "Medium Eggs": eggData.medium,
+      "Large Eggs": eggData.large,
+    },
+  ];
 
   return (
     <div className="dash-containersss">
@@ -120,9 +111,7 @@ const Once = () => {
                 eggs based on size, weight, or quality using sensors and
                 mechanisms. It enhances efficiency in egg processing and
                 packaging by ensuring accurate classification, reducing manual
-                labor, and minimizing errors. This technology is widely used in
-                poultry farms and egg production facilities to streamline
-                operations and maintain product consistency.
+                labor, and minimizing errors.
               </p>
             </div>
           )}
@@ -164,29 +153,28 @@ const Once = () => {
         <div className="Dsh-container">
           <div className="stats-grid">
             <div className="card red">
-              <h2>{totalEggs["Bad Eggs"]}</h2>
+              <h2>{eggData.bad}</h2>
               <p>Bad Eggs</p>
             </div>
             <div className="card orange">
-              <h2>{totalEggs["Small Eggs"]}</h2>
+              <h2>{eggData.small}</h2>
               <p>Small Eggs</p>
             </div>
             <div className="card yellow">
-              <h2>{totalEggs["Medium Eggs"]}</h2>
+              <h2>{eggData.medium}</h2>
               <p>Medium Eggs</p>
             </div>
             <div className="card dark-red">
-              <h2>{totalEggs["Large Eggs"]}</h2>
+              <h2>{eggData.large}</h2>
               <p>Large Eggs</p>
             </div>
           </div>
 
-          {/* Chart */}
           <div className="chart-container">
             <h2>Status Trends</h2>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={data}>
-                <XAxis dataKey="date" />
+                <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />

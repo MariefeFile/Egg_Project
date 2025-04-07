@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FaBars,
@@ -6,95 +6,113 @@ import {
   FaChartLine,
   FaNewspaper,
   FaUserCog,
-  FaLifeRing,
 } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
+import { auth } from "../config/firebase-config";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 import "./history.css";
-
-const getWeeklyDates = () => {
-  const today = new Date();
-  const dayOfWeek = today.getDay(); // 0 (Sunday) - 6 (Saturday)
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - dayOfWeek + 1); // Set to Monday
-
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  return days.map((day, index) => {
-    let date = new Date(startOfWeek);
-    date.setDate(startOfWeek.getDate() + index);
-
-    const formattedDate = `${date.toLocaleString("default", {
-      month: "long",
-    })}/${String(date.getDate()).padStart(2, "0")}/${date.getFullYear()}`;
-
-    return {
-      day,
-      date: formattedDate,
-      small: 12,
-      medium: 8,
-      large: 5,
-      bad: 20,
-    };
-  });
-};
-
-const getMonthlyData = () => {
-  const months = ["February", "March", "April"];
-  return months.map((month) => ({
-    month,
-    small: Math.floor(Math.random() * 500) + 300, // Simulated data
-    medium: Math.floor(Math.random() * 300) + 200,
-    large: Math.floor(Math.random() * 200) + 100,
-    bad: Math.floor(Math.random() * 700) + 500,
-  }));
-};
 
 const History = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [monthlyData] = useState(getMonthlyData());
+  const [dailyData, setDailyData] = useState({});
+  const [weeklyData, setWeeklyData] = useState([]);
+  const [monthlyData, setMonthlyData] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch daily data
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      const dailyDoc = await getDoc(doc(db, "eggCounts", today));
+      if (dailyDoc.exists()) {
+        const daily = dailyDoc.data();
+        setDailyData({
+          date: today,
+          ...daily,
+          total: daily.small + daily.medium + daily.large + daily.bad,
+        });
+      }
+
+      // Fetch weekly data
+      const weeklySnap = await getDocs(
+        query(collection(db, "eggHistory/weekly/data"), orderBy("day"))
+      );
+      const weekly = weeklySnap.docs.map((doc) => ({
+        day: doc.id,
+        ...doc.data(),
+      }));
+      setWeeklyData(weekly);
+
+      // Fetch monthly data
+      const monthlySnap = await getDocs(
+        query(collection(db, "eggHistory/monthly/data"), orderBy("month"))
+      );
+      const monthly = monthlySnap.docs.map((doc) => ({
+        month: doc.id,
+        ...doc.data(),
+      }));
+      setMonthlyData(monthly);
+    };
+
+    fetchData();
+  }, []);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
-  const [weeklyBreakdown, setWeeklyBreakdown] = useState(getWeeklyDates());
 
   const tableData = [
-    { type: "Daily", small: 12, medium: 8, large: 5, bad: 20, total: 45 },
-    { type: "Weekly", small: 84, medium: 56, large: 35, bad: 140, total: 315 },
+    {
+      type: "Daily",
+      small: dailyData.small || 0,
+      medium: dailyData.medium || 0,
+      large: dailyData.large || 0,
+      bad: dailyData.bad || 0,
+      total: dailyData.total || 0,
+    },
+    {
+      type: "Weekly",
+      small: weeklyData.reduce((sum, item) => sum + item.small, 0),
+      medium: weeklyData.reduce((sum, item) => sum + item.medium, 0),
+      large: weeklyData.reduce((sum, item) => sum + item.large, 0),
+      bad: weeklyData.reduce((sum, item) => sum + item.bad, 0),
+      total: weeklyData.reduce(
+        (sum, item) => sum + item.small + item.medium + item.large + item.bad,
+        0
+      ),
+    },
     {
       type: "Monthly",
-      small: 360,
-      medium: 240,
-      large: 150,
-      bad: 600,
-      total: 1350,
+      small: monthlyData.reduce((sum, item) => sum + item.small, 0),
+      medium: monthlyData.reduce((sum, item) => sum + item.medium, 0),
+      large: monthlyData.reduce((sum, item) => sum + item.large, 0),
+      bad: monthlyData.reduce((sum, item) => sum + item.bad, 0),
+      total: monthlyData.reduce(
+        (sum, item) => sum + item.small + item.medium + item.large + item.bad,
+        0
+      ),
     },
   ];
 
   const handleRowClick = (row) => {
     if (row.type === "Weekly") {
-      setSelectedRow({ type: "Weekly", data: weeklyBreakdown });
+      setSelectedRow({ type: "Weekly", data: weeklyData });
     } else if (row.type === "Monthly") {
       setSelectedRow({ type: "Monthly", data: monthlyData });
     } else {
       setSelectedRow({
         type: "Daily",
-        date: new Date().toLocaleDateString("en-US", {
-          month: "long",
-          day: "2-digit",
-          year: "numeric",
-        }),
-        ...row,
+        date: dailyData.date,
+        ...dailyData,
       });
     }
   };
@@ -114,20 +132,15 @@ const History = () => {
               <p>
                 An Egg Sorting Machine is an automated system designed to sort
                 eggs based on size, weight, or quality using sensors and
-                mechanisms. It enhances efficiency in egg processing and
-                packaging by ensuring accurate classification, reducing manual
-                labor, and minimizing errors. This technology is widely used in
-                poultry farms and egg production facilities to streamline
-                operations and maintain product consistency.
+                mechanisms...
               </p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Content Wrapper */}
+      {/* Sidebar + Table */}
       <div className="content-wrap2">
-        {/* Sidebar */}
         <div className={`sidebar2 ${sidebarOpen ? "open2" : "closed2"}`}>
           <div className="sidebar-menu2">
             <div className="sidebar-item2" onClick={() => navigate("/once")}>
@@ -149,7 +162,6 @@ const History = () => {
           </div>
         </div>
 
-        {/* Chart */}
         <div className="table-container">
           <h2>Egg Sorting Data</h2>
           <table className="egg-table">
@@ -184,7 +196,8 @@ const History = () => {
           </table>
         </div>
       </div>
-      {/* Details Tables */}
+
+      {/* Detail Views */}
       {selectedRow?.type === "Weekly" && (
         <div className="details-table-container">
           <h3>Weekly Breakdown</h3>
@@ -192,7 +205,6 @@ const History = () => {
             <thead>
               <tr>
                 <th>Day</th>
-                <th>Date</th>
                 <th>Small</th>
                 <th>Medium</th>
                 <th>Large</th>
@@ -200,14 +212,41 @@ const History = () => {
               </tr>
             </thead>
             <tbody>
-              {selectedRow.data.map((dayData, index) => (
+              {selectedRow.data.map((item, index) => (
                 <tr key={index}>
-                  <td>{dayData.day}</td>
-                  <td>{dayData.date}</td>
-                  <td>{dayData.small}</td>
-                  <td>{dayData.medium}</td>
-                  <td>{dayData.large}</td>
-                  <td>{dayData.bad}</td>
+                  <td>{item.day}</td>
+                  <td>{item.small}</td>
+                  <td>{item.medium}</td>
+                  <td>{item.large}</td>
+                  <td>{item.bad}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {selectedRow?.type === "Monthly" && (
+        <div className="details-table-container">
+          <h3>Monthly Breakdown</h3>
+          <table className="details-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>Bad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedRow.data.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.month}</td>
+                  <td>{item.small}</td>
+                  <td>{item.medium}</td>
+                  <td>{item.large}</td>
+                  <td>{item.bad}</td>
                 </tr>
               ))}
             </tbody>
@@ -238,34 +277,6 @@ const History = () => {
                 <td>{selectedRow.bad}</td>
                 <td>{selectedRow.total}</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {selectedRow?.type === "Monthly" && (
-        <div className="details-table-container">
-          <h3>Monthly Breakdown</h3>
-          <table className="details-table">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th>Small</th>
-                <th>Medium</th>
-                <th>Large</th>
-                <th>Bad</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedRow.data.map((monthData, index) => (
-                <tr key={index}>
-                  <td>{monthData.month}</td>
-                  <td>{monthData.small}</td>
-                  <td>{monthData.medium}</td>
-                  <td>{monthData.large}</td>
-                  <td>{monthData.bad}</td>
-                </tr>
-              ))}
             </tbody>
           </table>
         </div>
