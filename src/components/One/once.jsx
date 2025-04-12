@@ -19,7 +19,7 @@ import {
 import { MdWork } from "react-icons/md";
 import "./once.css";
 
-import { db } from "../config/firebase-config"; // ✅ make sure this path is correct
+import { db } from "../config/firebase-config"; // ✅ Ensure this path is correct
 import { doc, getDoc } from "firebase/firestore";
 
 const Once = () => {
@@ -37,52 +37,32 @@ const Once = () => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const toggleInfo = () => setShowInfo(!showInfo);
 
-  // ✅ Fetch egg count data from Firestore
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
+    const fetchEggData = async () => {
+      try {
+        // Reference to the Firestore document in the "eggs" collection
+        const docRef = doc(db, "eggs", "analytics1"); // Replace "analytics" with the document ID in the "eggs" collection
+        const docSnap = await getDoc(docRef);
 
-      // Run at exactly 00:00 (midnight)
-      if (hours === 0 && minutes === 0) {
-        try {
-          const docRef = doc(db, "users", "analytics");
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-
-            // Save data to 'history' collection with timestamp
-            const date = now.toLocaleDateString("en-US", {
-              month: "long",
-              day: "2-digit",
-              year: "numeric",
-            });
-
-            await setDoc(doc(db, "history", date), {
-              ...data,
-              timestamp: new Date().toISOString(),
-            });
-
-            // Reset egg count to 0
-            await setDoc(docRef, {
-              bad: 0,
-              small: 0,
-              medium: 0,
-              large: 0,
-            });
-
-            console.log("Egg data saved to history and reset at midnight.");
-          }
-        } catch (error) {
-          console.error("Midnight reset failed:", error);
+        if (docSnap.exists()) {
+          // Extract data from Firestore and update state
+          const data = docSnap.data();
+          setEggData({
+            bad: data.bad || 0, // Default to 0 if field is missing
+            small: data.small || 0,
+            medium: data.medium || 0,
+            large: data.large || 0,
+          });
+        } else {
+          console.error("No such document in the 'eggs' collection!");
         }
+      } catch (error) {
+        console.error("Error fetching egg data from Firestore:", error);
       }
-    }, 60000); // Check every 60 seconds
+    };
 
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
+    fetchEggData(); // Fetch data on component mount
+  }, []); // Empty dependency array ensures this runs only once
 
   const data = [
     {

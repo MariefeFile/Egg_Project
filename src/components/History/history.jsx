@@ -33,7 +33,7 @@ const History = () => {
     const fetchData = async () => {
       // Fetch daily data
       const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-      const dailyDoc = await getDoc(doc(db, "eggCounts", today));
+      const dailyDoc = await getDoc(doc(db, "eggs", today));
       if (dailyDoc.exists()) {
         const daily = dailyDoc.data();
         setDailyData({
